@@ -8,6 +8,8 @@
 
 @import "../../mixins/_scrollbar.less";
 
+@import "../../mixins/_reset.less";
+
 @border: 1px solid @table-border-color;
 
 @table-fixed-column-z-index: 30;
@@ -52,8 +54,10 @@
 }
 
 .@{prefix}-table {
+  .reset;
+
   width: 100%;
-  font-size: @table-font-size;
+  font: @table-font;
   color: @table--text-color;
   background-color: @table-bg;
   overflow: hidden;
@@ -124,6 +128,7 @@
     font-weight: normal;
     overflow-wrap: break-word;
     background-color: inherit;
+    box-sizing: border-box;
 
     &:not([align]) {
       text-align: left;
@@ -197,15 +202,6 @@
     }
   }
 
-  // @todo: 待优化
-  td > .@{prefix}-radio,
-  td > .@{prefix}-checkbox {
-    line-height: 1;
-    font-size: 0;
-    vertical-align: middle;
-    display: inline-block;
-  }
-
   // 边框线表格
   &--bordered {
     td,
@@ -234,12 +230,17 @@
 
     .@{prefix}-table__content {
       border-left: @border;
+
+      // 覆盖深色模式下，水平和垂直滚动条交汇处的默认白色背景
+      &::-webkit-scrollbar-corner {
+        background-color: transparent;
+      }
     }
 
     // 表格边框优化，适配固定列/固定表头场景
     .@{prefix}-table__content {
       border: @border;
-      border-radius: @border-radius;
+      border-radius: @border-radius-default;
     }
 
     .@{prefix}-table--loading {
@@ -582,8 +583,8 @@
   &.@{prefix}-is-focus,
   &:hover {
     color: @table-icon-active-color;
-    background-color: @table-icon-active-bg-color;
-    border-radius: 50%;
+    background-color: @table-highlight-bg-color--hover;
+    border-radius: @border-radius-circle;
   }
 }
 
@@ -631,7 +632,7 @@
 
 .@{prefix}-table__filter-pop-content-inner {
   padding: 16px;
-  .@{prefix}-input__wrap {
+  > .@{prefix}-input__wrap {
     width: 200px;
   }
 }
@@ -1047,15 +1048,68 @@
   cursor: move;
 }
 
-.@{prefix}-table__cell--editable {
-  cursor: pointer;
+.@{prefix}-table:not(.@{prefix}-table--row-edit) {
+  .@{prefix}-table__cell--editable {
+    cursor: pointer;
+  }
 }
 
 /** 吸底的分页器，需要背景色，避免表格文本内容显示穿透 */
 .@{prefix}-affix .@{prefix}-table__pagination {
-  background-color: white;
+  background-color: @table-bg;
 }
 
 .@{prefix}-table--bordered .@{prefix}-affix .@{prefix}-table__pagination {
   border-top: @border;
+}
+
+.@{prefix}-table__bottom-content + .@{prefix}-table__pagination-wrap {
+  .@{prefix}-table__pagination {
+    border: 0;
+    padding: 0;
+  }
+}
+
+.@{prefix}-table--column-resizable:not(.@{prefix}-table--bordered) {
+  th {
+    border-top: 1px solid transparent;
+  }
+
+  thead.@{prefix}-table__header:hover {
+    th:not(:last-child) {
+      border-right: @border;
+    }
+
+    th {
+      border-top: @border;
+    }
+  }
+}
+
+/** 可选中行的场景下，将 Checkbox 和 Radio 铺满整个单元格，增大点击范围，方便用户选中 */
+.@{prefix}-table {
+  td.@{prefix}-table__cell-check,
+  th.@{prefix}-table__cell-check {
+    padding: 0;
+
+    /** HTML 特性: th/td 必须设置为 0，他们的子元素才能设置为 100% */
+    height: 0;
+
+    .@{prefix}-radio__label,
+    .@{prefix}-checkbox__label {
+      display: none;
+    }
+  }
+
+  .@{prefix}-table__cell-check {
+    .@{prefix}-radio,
+    .@{prefix}-checkbox,
+    .@{prefix}-table__th-cell-inner {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
 }

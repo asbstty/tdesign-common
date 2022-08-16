@@ -4,6 +4,8 @@
 
 @import "./_mixin.less";
 
+@import "../../mixins/_reset.less";
+
 .button-attr-color(@theme, @attr, @ghost: false) {
   &:hover {
     @{attr}: @@theme-hover;
@@ -26,7 +28,10 @@
 }
 
 .@{prefix}-button {
+  .reset;
   .button;
+
+  text-decoration: none;
 
   .@{prefix}-button__text,
   .@{prefix}-icon {
@@ -42,11 +47,16 @@
     font-size: @btn-loading-size;
   }
 
-  .@{prefix}-icon  + .@{prefix}-button__text {
+  .@{prefix}-icon  + .@{prefix}-button__text:not(:empty) {
     margin-left: @btn-icon-text-margin-left;
   }
 
-  .@{prefix}-loading + .@{prefix}-button__text {
+  .@{prefix}-loading + .@{prefix}-button__text:not(:empty) {
+    margin-left: @btn-icon-text-margin-left;
+  }
+
+  .@{prefix}-button__suffix:not(:empty) {
+    display: inline-flex;
     margin-left: @btn-icon-text-margin-left;
   }
 
@@ -86,6 +96,7 @@
       background-color: transparent;
 
       &.@{prefix}-button--theme-primary {
+        .button-attr-color("primary", color, true);
         .button-attr-color("primary", border-color, true);
       }
 
@@ -296,7 +307,7 @@
   }
 
   &--shape-round {
-    border-radius: @btn-shape-border-radius-default;
+    border-radius: @border-radius-round;
 
     &.@{prefix}-size-s {
       border-radius: @btn-shape-border-radius-s;
@@ -328,6 +339,7 @@
 
     &.@{prefix}-size-l {
       width: @btn-height-l;
+      padding: 0;
       border-radius: @btn-shape-border-radius-l;
     }
   }

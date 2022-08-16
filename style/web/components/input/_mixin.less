@@ -7,7 +7,7 @@
   background-color: @input-bg-color-default;
   outline: none;
   color: @input-text-color-default;
-  font-size: @input-font-size;
+  font: @input-font;
   width: 100%;
   box-sizing: border-box;
   transition: @input-inner-transition;
@@ -26,8 +26,19 @@
   }
 }
 
+.input-readonly {
+  &.@{prefix}-is-readonly {
+    color: @input-text-color-readonly;
+    background-color: @input-bg-color-readonly;
+
+    .@{prefix}-input__inner {
+      cursor: @input-cursor-readonly;
+    }
+  }
+}
+
 .input-disabled {
-  &.@{prefix}-input.@{prefix}-is-disabled {
+  &.@{prefix}-is-disabled {
     color: @input-text-color-disabled;
     background-color: @input-bg-color-disabled;
 

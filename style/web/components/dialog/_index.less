@@ -8,12 +8,16 @@
 
 @import "./_mixin.less";
 
+@import "../../mixins/_reset.less";
+
 // <name> 替换为组件名
 .@{prefix}-dialog {
+  .reset;
+
   width: @dialog-width;
   background-color: @dialog-bg-color;
   position: relative;
-  border-radius: @dialog-border-radius;
+  border-radius: @border-radius-large;
 
   // icon theme
   .@{prefix}-icon.t-is-info {
@@ -38,21 +42,11 @@
 
   &__header {
     color: @dialog-header-text-color;
-    font-size: @dialog-header-font-size;
-    font-weight: @dialog-header-font-weight;
+    font: @dialog-header-font;
     display: flex;
     align-items: center;
     word-break: break-word;
     padding-right: 10px;
-
-    >h5 {
-      padding: 0;
-      margin: 0;
-      font-weight: normal;
-      display: inline-block;
-      vertical-align: middle;
-      line-height: @dialog-header-line-height;
-    }
 
     .@{prefix}-icon {
       font-size: @dialog-icon-size;
@@ -63,8 +57,7 @@
 
   &__body {
     color: @dialog-body-text-color;
-    font-size: @dialog-body-text-font-size;
-    line-height: @dialog-body-line-height;
+    font: @dialog-body-text-font;
     overflow: auto;
     padding: @dialog-body-padding;
     word-break: break-word;
@@ -77,10 +70,11 @@
   &__footer {
     width: 100%;
     text-align: right;
+    padding: @dialog-footer-padding;
     // remove space between inline-block elements.
     word-spacing: @dialog-word-spacing;
 
-    .t-button + .t-button {
+    .@{prefix}-button + .@{prefix}-button {
       margin-left: @dialog-footer-button-margin-left;
     }
   }
@@ -108,7 +102,7 @@
     height: @dialog-close-icon-size;
     align-items: center;
     justify-content: center;
-    border-radius: @dialog-close-border-radius;
+    border-radius: @border-radius-default;
     background: @dialog-bg-color;
     transition: all @anim-duration-base linear;
 
@@ -154,19 +148,19 @@
     }
   }
 
-  &.t-is-visable {
+  &.@{prefix}-is-visable {
     visibility: visible;
   }
 
-  &.t-is-hidden {
+  &.@{prefix}-is-hidden {
     visibility: hidden;
   }
 
-  &.t-is-display {
+  &.@{prefix}-is-display {
     display: block;
   }
 
-  &.t-not-display {
+  &.@{prefix}-not-display {
     display: none;
   }
   // 遮罩层
@@ -189,7 +183,6 @@
     height: 100%;
     z-index: 1;
     overflow: auto;
-    pointer-events: none;
   }
   // 定位层 用于实现居中 或者距离顶部 定位
   .@{prefix}-dialog__position {
@@ -202,6 +195,7 @@
     position: relative;
     // 设置最小距离顶部底部距离
     padding: 48px 0;
+    box-sizing: border-box;
     // 居中和距顶部布局
     &.@{prefix}-dialog--top {
       align-items: flex-start;
@@ -214,22 +208,13 @@
     }
   }
 
-  .t-is-hidden {
+  .@{prefix}-is-hidden {
     background: none;
   }
 
   .@{prefix}-dialog {
     pointer-events: auto;
-    z-index: 5;
+    z-index: @z-index-dialog;
     border: @dialog-border;
-
-    &.@{prefix}-dialog--fixed {
-      position: fixed;
-      z-index: @z-index-dialog;
-    }
-
-    &.@{prefix}-dialog--absolute {
-      position: absolute;
-    }
   }
 }

@@ -8,15 +8,19 @@
 
 @import "../../mixins/_scrollbar.less";
 
+@import "../../mixins/_reset.less";
+
 // <name> 替换为组件名
 .@{radio-cls}-group {
+  .reset;
+
   display: inline-flex;
   align-items: center;
   width: fit-content;
   max-width: 100%;
   overflow-x: auto;
   overflow-y: hidden;
-
+  border-radius: @border-radius-default;
   .scrollbar(4px);
 
   .@{radio-cls} {
@@ -25,39 +29,9 @@
 
   &.@{radio-cls}-group__outline {
     flex-wrap: wrap;
+    row-gap: @spacer-s;
 
     .@{radio-button--cls} {
-      &:not(:first-child) {
-        &::before,
-        &::after {
-          content: "";
-          position: absolute;
-          top: -1px;
-          display: block;
-          box-sizing: content-box;
-          width: 1px;
-          height: 100%;
-          padding: 1px 0;
-          background-color: @radio-button-group-background-color-filled;
-        }
-
-        &::before {
-          z-index: -1;
-          left: -1px;
-        }
-
-        &::after {
-          right: -1px;
-        }
-
-        &.@{prefix}-is-checked {
-          &::before,
-          &::after {
-            background-color: @radio-button-border-color-checked;
-          }
-        }
-      }
-
       &.@{prefix}-is-checked {
         color: @radio-button-color-outline-checked;
       }
@@ -75,7 +49,7 @@
   &.@{radio-cls}-group--filled {
     border-color: @radio-button-group-background-color-filled;
     padding: @radio-group-padding;
-    border-radius: @radio-button-border-radius;
+    border-radius: @border-radius-default;
     background-color: @radio-button-group-background-color-filled;
     position: relative;
 
@@ -175,8 +149,7 @@
     .@{radio-button--cls} {
       height: @radio-height-small;
       padding: @radio-button-padding-small;
-      font-size: @radio-button-font-size-small;
-      line-height: @radio-button-line-height-small;
+      font: @radio-button-font-small;
 
       &::before {
         height: calc(100% - 16px);
@@ -188,7 +161,7 @@
     .@{radio-button--cls} {
       height: @radio-height-medium;
       padding: @radio-button-padding-medium;
-      font-size: @radio-button-font-size-medium;
+      font: @radio-button-font-medium;
 
       &::before {
         height: calc(100% - 20px);
@@ -200,7 +173,7 @@
     .@{radio-button--cls} {
       height: @radio-height-large;
       padding: @radio-button-padding-large;
-      font-size: @radio-button-font-size-large;
+      font: @radio-button-font-large;
 
       &::before {
         height: calc(100% - 24px);
@@ -219,6 +192,7 @@
     transition: @radio-button-transition;
     color: @radio-label-color;
     white-space: nowrap;
+    box-sizing: border-box;
 
     &:first-child {
       border-radius: @radio-button-border-radius 0 0 @radio-button-border-radius;
@@ -234,6 +208,7 @@
       opacity: @radio-opacity-transparent;
       height: 0;
       width: 0;
+      .reset;
     }
 
     &:hover {
@@ -276,10 +251,14 @@
 }
 
 .@{radio-cls} {
+  .reset;
+
   position: relative;
   cursor: pointer;
 
   &__former {
+    .reset;
+
     opacity: @radio-opacity-transparent;
     position: absolute;
   }
@@ -290,7 +269,7 @@
     width: @radio-size;
     height: @radio-size;
     vertical-align: middle;
-    border-radius: @border-radius-50;
+    border-radius: @border-radius-circle;
     border: @radio-input-border;
     background-color: @radio-input-color;
     transition: @radio-input-transition;
@@ -306,7 +285,7 @@
       margin-left: -@radio-dot-size;
       transform: scale(.5);
       opacity: @radio-opacity-transparent;
-      border-radius: @border-radius-50;
+      border-radius: @border-radius-circle;
       background-color: @radio-dot-color;
       transition: all @anim-duration-base @anim-time-fn-ease-out;
     }
@@ -317,7 +296,7 @@
     margin-left: @radio-input-label-spacer;
     color: @radio-label-color;
     vertical-align: middle;
-    font-size: @radio-font;
+    font: @radio-font;
     white-space: nowrap;
   }
 

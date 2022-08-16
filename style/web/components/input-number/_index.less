@@ -8,10 +8,14 @@
 
 @import "../../utilities/_animation.less";
 
+@import "../../mixins/_reset.less";
+
 @inputCls: ~"@{prefix}-input";
 @inputNumberCls: ~"@{prefix}-input-number";
 
 .@{inputNumberCls} {
+  .reset;
+
   display: inline-block;
   position: relative;
   box-sizing: border-box;
@@ -32,6 +36,20 @@
 
   input[type="number"] {
     appearance: textfield;
+  }
+
+  > .@{prefix}-input__tips {
+    position: absolute;
+    left: 0;
+  }
+
+  // 输入框和右置内容之间需要间距
+  input + .@{prefix}-input__suffix {
+    margin-left: @input-number-padding-horizontal-default;
+  }
+
+  .@{prefix}-input__prefix {
+    margin-right: @input-number-padding-horizontal-default;
   }
 
   .@{inputCls} {
@@ -59,7 +77,7 @@
     top: 0;
     border: 1px solid @input-number-button-border-color;
     box-sizing: border-box;
-    border-radius: @border-radius;
+    border-radius: @border-radius-default;
     background-color: @input-number-button-bg-color;
     display: flex;
     justify-content: center;
@@ -198,7 +216,7 @@
 
 .@{inputNumberCls}.@{inputNumberCls}--normal {
   padding: 0;
-  border-radius: @border-radius;
+  border-radius: @border-radius-default;
 
   &.@{prefix}-is-disabled {
     cursor: no-drop;
@@ -239,7 +257,7 @@
     padding-right: (
       @input-number-right-button-width + @input-number-padding-horizontal-default
     );
-    border-radius: @border-radius;
+    border-radius: @border-radius-default;
   }
 
   .@{inputNumberCls}__decrease,
@@ -293,12 +311,12 @@
 
   .@{inputNumberCls}__increase {
     top: 1px;
-    border-top-right-radius: calc(@border-radius - 1px);
+    border-top-right-radius: calc(@border-radius-default - 1px);
   }
 
   .@{inputNumberCls}__decrease {
     top: @input-number-button-column-height + 3px;
-    border-bottom-right-radius: calc(@border-radius - 1px);
+    border-bottom-right-radius: calc(@border-radius-default - 1px);
   }
 
   &.@{prefix}-size-l {

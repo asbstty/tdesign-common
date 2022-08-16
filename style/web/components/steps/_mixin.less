@@ -56,7 +56,7 @@
         .default-step-icon;
       }
 
-      & > .t-icon {
+      & > .@{prefix}-icon {
         font-size: @steps-item-t-icon-font-size-default;
       }
     }
@@ -85,7 +85,7 @@
   width: @steps-circle-width;
   height: @steps-circle-height;
   text-align: center;
-  border-radius: 50%;
+  border-radius: @border-radius-circle;
   margin-top: @steps-item-default-icon-margin-top;
   font-size: @steps-default-step-icon-font-size;
 }
@@ -95,7 +95,7 @@
 .default-anchor-status(@anchor-status) {
   & when(@anchor-status = finish) {
     .@{prefix}-steps-item__icon {
-      .t-icon {
+      .@{prefix}-icon {
         color: @steps-item-icon-anchor-color;
       }
 
@@ -115,7 +115,7 @@
   }
   & when(@anchor-status = process) {
     .@{prefix}-steps-item__icon {
-      .t-icon {
+      .@{prefix}-icon {
         color: @steps-item-icon-anchor-color;
       }
 
@@ -138,7 +138,7 @@
   }
   & when(@anchor-status = error) {
     .@{prefix}-steps-item__icon {
-      .t-icon {
+      .@{prefix}-icon {
         color: @steps-item-icon-anchor-color-error;
       }
 
@@ -186,9 +186,11 @@
     width: @steps-dot-item-icon-width;
     height: @steps-dot-item-icon-height;
     border: 2px solid @steps-item-icon-dot-border-color-default;
-    border-radius: 50%;
+    border-radius: @border-radius-circle;
     margin-bottom: @steps-dot-item-icon-margin-bottom;
     position: relative;
+    box-sizing: border-box;
+    flex-shrink: 0;
     & when(@item-direction = vertical) {
       top: @steps-dot-anchor-position-top;
     }

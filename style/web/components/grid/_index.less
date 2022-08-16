@@ -6,8 +6,12 @@
 
 @import "./_mixin.less";
 
+@import "../../mixins/_reset.less";
+
 // Grid system
 .@{prefix}-row {
+  .reset;
+
   display: flex;
   flex-flow: row wrap;
 }
@@ -56,6 +60,7 @@
   position: relative;
   max-width: 100%;
   min-height: 1px;
+  box-sizing: border-box;
 }
 
 .gen-grid();

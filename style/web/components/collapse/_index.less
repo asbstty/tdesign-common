@@ -6,7 +6,11 @@
 
 @import "./_mixin.less";
 
+@import "../../mixins/_reset.less";
+
 .@{collapse-cls} {
+  .reset;
+
   border: @collapse-border-size;
   border-bottom: 0;
   background: @bg-color-container;
@@ -102,6 +106,14 @@
     .@{collapse-panel-cls}__body {
       background: @font-white-1;
       // background: @bg-color-component-disabled;
+    }
+  }
+
+  .@{prefix}-fake-arrow {
+    transform: rotate(-90deg);
+
+    &--active {
+      transform: rotate(180deg);
     }
   }
 

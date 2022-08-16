@@ -80,10 +80,12 @@ spline: data
 
 ### 自定义表尾的表格
 
-表格提供自定义表尾功能，可用于表尾数据统计等场景。使用 `foot` 定义表尾内容。
+表格提供自定义表尾功能，可用于表尾数据统计等场景。使用 `column.foot` 定义每一列的表尾内容。
 
-- 默认输出 `foot` 字符串，如果 `foot` 类型为函数，则作为表尾渲染函数自定义表尾内容。
-- 对于有插槽特性的框架，支持插槽，使用 `foot` 的值作为插槽名称。
+- 默认输出 `column.foot` 字符串，如果 `foot` 类型为函数，则作为表尾渲染函数自定义表尾内容。
+- 对于有插槽特性的框架，支持插槽，使用 `foot` 值作为插槽名称。
+- 如果想定义通栏表尾，请使用 `footerSummary`
+- 如果想自定义表尾合并单元格信息，请使用 `rowspanAndColspanInFooter`，类似表格内容的合并单元格方法 `rowspanAndColspan`。
 
 {{ custom-footer }}
 
@@ -200,13 +202,13 @@ spline: data
 - 表格属性 `filterValue` 用于设置过滤功能默认值，示例：`{ firstName: '' }`。
 - 表格属性 `filterIcon` 用于设置自定义过滤图标。
 - 筛选器值发生变化时，会触发 `filterChange` 事件。
-- 列配置 `filter.type` 决定使用哪一种筛选器，可选值有：`single/multiple/input`，分别表示：单选按钮筛选器、复选框筛选器、输入框筛选器。
+- 列配置 `filter.type` 决定使用哪一种筛选器，可选值有：`single/multiple/input`，分别表示：单选按钮筛选器、复选框筛选器、输入框筛选器。也可以使用 `filter.component` 自定义筛选组件。
 - 列配置 `filter.list` 用于配置当前筛选器可选值有哪些，仅当 `filter.type` 等于 single 或 multiple 时有效。
 - 列配置 `filter.props` 用于透传筛选器属性，可以对筛选器进行任何原组件支持的属性配置.
 - 列配置 `filter.component` 用于自定义筛选器，只要保证自定义筛选器包含 `value` 属性 和 `change` 事件，即可像内置筛选器一样正常使用。
 - 列配置 `filter.showConfirmAndReset` 用于控制是否显示“确认”“重置”按钮.
 - 列配置 `filter.resetValue` 用于设置点击“重置”按钮时的重置值，并非每个场景都会重置为 `''` 或 `[]` `null`，默认重置为 `''`。
-- 表格属性 `filterRow` 可完全自定义过滤结果行显示内容
+- 表格属性 `filterRow` 可完全自定义过滤结果行显示内容，设置 `filterRow={() => null}` 隐藏过滤行。
 
 {{ filter-controlled }}
 
@@ -313,6 +315,13 @@ spline: data
 {{ editable-cell }}
 
 #### 可编辑行的表格
+
+可对表格进行整行编辑和保存等操作。
+
+- `editableRowKeys` 用于控制处于编辑状态的行。
+- `onRowEdit` 会在行编辑时触发。
+- 实例方法 `validateRowData` 用于进行表格行数据校验，`onRowValidate` 在行编辑校验完成时触发。
+- 实例方法 `validateTableData` 用于进行表格全部数据校验，`onValidate` 在全部数据校验完成时触发。
 
 {{ editable-row }}
 
