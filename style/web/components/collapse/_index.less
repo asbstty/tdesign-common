@@ -31,6 +31,11 @@
   &__icon {
     cursor: pointer;
 
+    &:hover {
+      background: @collapse-panel-hover-color;
+      border-radius: 3px;
+    }
+
     &--left {
       margin-right: @spacer-1;
     }
@@ -47,7 +52,7 @@
       padding: 0 16px;
       border-bottom: @collapse-border-size;
       height: @collapse-panel-header-height;
-      font-size: @collapse-panel-header-text-size;
+      font: @collapse-panel-header-text;
       display: flex;
       align-items: center;
 
@@ -57,6 +62,10 @@
 
       &.@{prefix}-is-clickable {
         cursor: pointer;
+
+        &:hover {
+          background: @collapse-panel-hover-color;
+        }
       }
     }
 
@@ -70,11 +79,13 @@
     }
     .@{collapse-panel-cls}__content {
       padding: 12px 16px 12px 40px;
+      color: @text-color-secondary;
     }
   }
 
   &.@{prefix}-is-disabled {
-    background: @bg-color-component-disabled;
+    background: @font-white-1;
+    color: @font-gray-4;
 
     .@{collapse-panel-cls}__header {
       cursor: not-allowed;
@@ -82,10 +93,15 @@
 
     .@{collapse-panel-cls}__icon {
       cursor: not-allowed;
+
+      &:hover {
+        background: none;
+      }
     }
 
     .@{collapse-panel-cls}__body {
-      background: @bg-color-component-disabled;
+      background: @font-white-1;
+      // background: @bg-color-component-disabled;
     }
   }
 
